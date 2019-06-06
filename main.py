@@ -2,6 +2,7 @@ import matplotlib.pylab as plt
 import numpy as np
 import scipy.sparse.linalg as spl
 import scipy.spatial.distance as dist
+from scipy import sparse
 
 
 def main():
@@ -23,18 +24,19 @@ def SVD(matrix):
     k = 80
     p_data = 0.0
 
+    sp_matrix= sparse.csr_matrix(matrix)
     while p_data < 0.90:
         print("\nsolving svds for k =", k)
-        U, S, V = spl.svds(matrix, k=k)
+        U, S, V = spl.svds(sp_matrix, k=k)
         u = np.array(U)
         s = np.diag(S)
         v = np.array(V)
         m = (u @ s @ v)
 
         print(" SQE calc ...")
-        sqe = dist.sqeuclidean(m.flatten(), matrix)
+        sqe = dist.sqeuclidean(m.flatten(), sp_matrix.toarray().flatten())
 
-        adj_tot = len(matrix.nonzero()[0])
+        adj_tot = len(sp_matrix.nonzero()[0])
 
         p_data = 1 - (sqe / adj_tot)
         print(" Data reconstruction: ", p_data, "%")
