@@ -46,7 +46,7 @@ def SVD(matrix):
     print('\n\n transport the data into sparse matrix.')
     sp_matrix = sparse.csr_matrix(matrix, dtype=float)
     while p_data < 0.90:
-        print("  Computing svds with k =", k)
+        print("  Computing SVD with k =", k)
         # making SVD matrices
         U, S, Vt = splin.svds(sp_matrix, k=k)
         print('  Done!')
@@ -72,7 +72,7 @@ def SVD(matrix):
 
         k += 1
     print('  Done!')
-    print("\n  Computing svds with k =5")
+    print("\n  Computing SVD with k =5")
     U, S, Vt = splin.svds(sp_matrix, k=5)
     # plot top 5 result
     plt.title('Top 5 Left Singular Vector')
@@ -81,7 +81,7 @@ def SVD(matrix):
     plt.show()
     print("  Done!")
 
-    print("\n  Computing svds with k = 5")
+    print("\n  Computing SVD with k = 5")
     absU = np.absolute(np.array(U))
 
     indices = np.ones([100, 5], dtype=int)
